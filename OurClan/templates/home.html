@@ -1,0 +1,502 @@
+{% extends "layout.html" %}
+
+{% block title %}Home - Our Clan{% endblock %}
+
+{% block extra_css %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+
+    .hero-banner {
+        position: relative;
+        height: 600px;
+        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        overflow: hidden;
+        border-radius: 20px;
+        margin-bottom: 80px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-banner::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 50%, rgba(107, 70, 193, 0.2) 0%, transparent 50%);
+        animation: pulse 8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 40px;
+    }
+
+    .clan-logo {
+        width: 150px;
+        height: 150px;
+        background: linear-gradient(135deg, #FFD700, #FFA500);
+        border-radius: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        font-weight: bold;
+        color: #1a1a2e;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 40px rgba(255, 215, 0, 0.6);
+        transform: rotate(-5deg);
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: rotate(-5deg) translateY(0px); }
+        50% { transform: rotate(-5deg) translateY(-20px); }
+    }
+
+    .hero-title {
+        font-family: 'Luckiest Guy', cursive;
+        font-size: 5rem;
+        color: #FFD700;
+        text-shadow: 
+            4px 4px 0px #FF6B6B,
+            8px 8px 0px rgba(0, 0, 0, 0.3);
+        margin-bottom: 20px;
+        letter-spacing: 3px;
+    }
+
+    .hero-tagline {
+        font-size: 1.8rem;
+        color: #fff;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+        margin-bottom: 30px;
+        font-weight: 600;
+    }
+
+    .clan-tag {
+        display: inline-block;
+        background: rgba(255, 215, 0, 0.2);
+        border: 3px solid #FFD700;
+        padding: 10px 30px;
+        border-radius: 50px;
+        font-size: 1.5rem;
+        color: #FFD700;
+        font-weight: bold;
+        letter-spacing: 2px;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-bottom: 80px;
+    }
+
+    .stat-box {
+        background: linear-gradient(135deg, rgba(107, 70, 193, 0.3), rgba(46, 134, 171, 0.3));
+        backdrop-filter: blur(10px);
+        border: 3px solid rgba(255, 215, 0, 0.3);
+        border-radius: 20px;
+        padding: 40px 30px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .stat-box::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+        transform: rotate(45deg);
+        transition: all 0.6s;
+    }
+
+    .stat-box:hover::before {
+        animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    .stat-box:hover {
+        transform: translateY(-15px) scale(1.05);
+        border-color: #FFD700;
+        box-shadow: 0 20px 50px rgba(255, 215, 0, 0.4);
+    }
+
+    .stat-icon {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.5));
+    }
+
+    .stat-value {
+        font-size: 3.5rem;
+        font-weight: bold;
+        color: #FFD700;
+        text-shadow: 2px 2px 10px rgba(255, 215, 0, 0.5);
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .stat-label {
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.9);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 600;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .section-header h2 {
+        font-family: 'Luckiest Guy', cursive;
+        font-size: 4rem;
+        color: #FFD700;
+        text-shadow: 
+            3px 3px 0px #6B46C1,
+            6px 6px 0px rgba(0, 0, 0, 0.3);
+        margin-bottom: 15px;
+        letter-spacing: 2px;
+    }
+
+    .section-header p {
+        font-size: 1.3rem;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .war-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+        margin-bottom: 80px;
+    }
+
+    .war-card {
+        background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(107, 70, 193, 0.5));
+        border-radius: 20px;
+        padding: 40px;
+        border: 3px solid transparent;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .war-card.victory {
+        border-color: #28a745;
+    }
+
+    .war-card.victory::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #28a745, #20c997);
+        box-shadow: 0 0 20px #28a745;
+    }
+
+    .war-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .war-badge {
+        display: inline-block;
+        background: #28a745;
+        color: white;
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+    }
+
+    .war-teams {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .team {
+        text-align: center;
+    }
+
+    .team-name {
+        font-size: 1.4rem;
+        color: #FFD700;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .team-score {
+        font-size: 3rem;
+        color: white;
+        font-weight: bold;
+    }
+
+    .vs-text {
+        font-size: 2rem;
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: bold;
+    }
+
+    .war-details {
+        display: flex;
+        justify-content: space-around;
+        padding-top: 20px;
+        border-top: 2px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .detail-item {
+        text-align: center;
+    }
+
+    .detail-label {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+
+    .detail-value {
+        color: #FFD700;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .cta-banner {
+        background: linear-gradient(135deg, #6B46C1, #2E86AB);
+        border-radius: 30px;
+        padding: 80px 40px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        border: 4px solid #FFD700;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .cta-banner::before {
+        content: '⚔️';
+        position: absolute;
+        font-size: 20rem;
+        opacity: 0.05;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .cta-banner h2 {
+        font-family: 'Luckiest Guy', cursive;
+        font-size: 3.5rem;
+        color: white;
+        margin-bottom: 20px;
+        text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .cta-banner p {
+        font-size: 1.5rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 40px;
+    }
+
+    .join-button {
+        display: inline-block;
+        background: linear-gradient(135deg, #FFD700, #FFA500);
+        color: #1a1a2e;
+        padding: 20px 60px;
+        font-size: 1.8rem;
+        font-weight: bold;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+        border: 4px solid transparent;
+    }
+
+    .join-button:hover {
+        transform: scale(1.1) translateY(-5px);
+        box-shadow: 0 20px 50px rgba(255, 215, 0, 0.7);
+        color: #1a1a2e;
+        border-color: white;
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 3rem;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+        }
+        
+        .war-cards {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Epic Hero Banner -->
+<div class="hero-banner">
+    <div class="hero-content">
+        <div class="clan-logo">OC</div>
+        <h1 class="hero-title">OUR CLAN</h1>
+        <p class="hero-tagline">WHERE LEGENDS ARE FORGED</p>
+        <div class="clan-tag">#CLANTAG123</div>
+    </div>
+</div>
+
+<!-- Stats Grid -->
+<div class="stats-grid">
+    <div class="stat-box">
+        <div class="stat-icon">👥</div>
+        <span class="stat-value">50/50</span>
+        <span class="stat-label">Members</span>
+    </div>
+    <div class="stat-box">
+        <div class="stat-icon">🏆</div>
+        <span class="stat-value">47,832</span>
+        <span class="stat-label">Clan Trophies</span>
+    </div>
+    <div class="stat-box">
+        <div class="stat-icon">⚔️</div>
+        <span class="stat-value">156-42</span>
+        <span class="stat-label">War Record</span>
+    </div>
+    <div class="stat-box">
+        <div class="stat-icon">🔥</div>
+        <span class="stat-value">15</span>
+        <span class="stat-label">Win Streak</span>
+    </div>
+</div>
+
+<!-- Recent Wars Section -->
+<div class="section-header">
+    <h2>RECENT BATTLES</h2>
+    <p>Crushing our enemies, one war at a time</p>
+</div>
+
+<div class="war-cards">
+    <div class="war-card victory">
+        <div class="war-badge">🏆 VICTORY</div>
+        <div class="war-teams">
+            <div class="team">
+                <div class="team-name">OUR CLAN</div>
+                <div class="team-score">149⭐</div>
+            </div>
+            <div class="vs-text">VS</div>
+            <div class="team">
+                <div class="team-name">ENEMY CLAN</div>
+                <div class="team-score">137⭐</div>
+            </div>
+        </div>
+        <div class="war-details">
+            <div class="detail-item">
+                <div class="detail-label">Destruction</div>
+                <div class="detail-value">98.7%</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Perfect Wars</div>
+                <div class="detail-value">3</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Date</div>
+                <div class="detail-value">Oct 25</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="war-card victory">
+        <div class="war-badge">🏆 VICTORY</div>
+        <div class="war-teams">
+            <div class="team">
+                <div class="team-name">OUR CLAN</div>
+                <div class="team-score">145⭐</div>
+            </div>
+            <div class="vs-text">VS</div>
+            <div class="team">
+                <div class="team-name">DRAGON ARMY</div>
+                <div class="team-score">141⭐</div>
+            </div>
+        </div>
+        <div class="war-details">
+            <div class="detail-item">
+                <div class="detail-label">Destruction</div>
+                <div class="detail-value">96.5%</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Perfect Wars</div>
+                <div class="detail-value">5</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Date</div>
+                <div class="detail-value">Oct 22</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="war-card victory">
+        <div class="war-badge">🏆 VICTORY</div>
+        <div class="war-teams">
+            <div class="team">
+                <div class="team-name">OUR CLAN</div>
+                <div class="team-score">148⭐</div>
+            </div>
+            <div class="vs-text">VS</div>
+            <div class="team">
+                <div class="team-name">WARRIORS</div>
+                <div class="team-score">139⭐</div>
+            </div>
+        </div>
+        <div class="war-details">
+            <div class="detail-item">
+                <div class="detail-label">Destruction</div>
+                <div class="detail-value">99.2%</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Perfect Wars</div>
+                <div class="detail-value">4</div>
+            </div>
+            <div class="detail-item">
+                <div class="detail-label">Date</div>
+                <div class="detail-value">Oct 19</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action -->
+<div class="cta-banner">
+    <h2>READY TO JOIN THE BEST?</h2>
+    <p>We're recruiting active warriors who live for war and glory!</p>
+    <a href="#" class="join-button">JOIN OUR CLAN</a>
+</div>
+{% endblock %}

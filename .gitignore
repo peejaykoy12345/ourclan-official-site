@@ -1,0 +1,97 @@
+# ============================================
+# Python Flask .gitignore Template
+# ============================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Virtual Environments ---
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# --- Flask / Instance Folder ---
+instance/
+*.db
+*.sqlite3
+
+# --- Flask Secrets & Config ---
+*.env
+.env.*
+config.py
+config_local.py
+secrets.json
+
+# --- Byte-compiled / optimized / DLL files ---
+*.pyc
+*.pyo
+*.pyd
+
+# --- Distribution / Packaging ---
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# --- Unit test / coverage reports ---
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# --- IDE / Editor specific ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Logs & Temp files ---
+*.log
+*.tmp
+*.bak
+*.old
+*.pid
+
+# --- Jupyter Notebook checkpoints ---
+.ipynb_checkpoints
+
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
+
+# --- Flask static / uploads (optional) ---
+# Uncomment if you don’t want to commit user uploads or generated static files
+# static/
+# uploads/
+
+# --- Misc ---
+__MACOSX/
