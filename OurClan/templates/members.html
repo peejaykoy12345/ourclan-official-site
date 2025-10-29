@@ -1,0 +1,153 @@
+{% extends "layout.html" %}
+
+{% block title %}Members - Our Clan{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* General page styling */
+    body {
+        background: radial-gradient(circle at top, #2a1e55 0%, #120b27 80%);
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .page-header h1 {
+        font-family: 'Supercell Magic', sans-serif;
+        color: var(--coc-gold);
+        text-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+        letter-spacing: 1px;
+    }
+
+    .page-header p {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 1.1rem;
+    }
+
+    /* Member Card */
+    .member-card {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 215, 0, 0.05));
+        border: 2px solid rgba(255, 215, 0, 0.4);
+        border-radius: 20px;
+        padding: 25px 15px;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .member-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 215, 0, 0.15), transparent 70%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .member-card:hover::before {
+        opacity: 1;
+    }
+
+    .member-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+    }
+
+    /* Member details */
+    .member-name {
+        font-family: 'Supercell Magic', sans-serif;
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: var(--coc-gold);
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        margin-bottom: 5px;
+    }
+
+    .member-role {
+        font-size: 1rem;
+        font-style: italic;
+        color: #bbb;
+        margin-bottom: 10px;
+    }
+
+    .member-level {
+        font-weight: 600;
+        color: var(--coc-purple);
+        font-size: 1.1rem;
+    }
+
+    .member-stats {
+        margin-top: 15px;
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.85);
+    }
+
+    .trophy-icon {
+        color: var(--coc-gold);
+        margin-right: 5px;
+    }
+
+    /* Role badges */
+    .role-badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+
+    .role-leader { background: linear-gradient(90deg, #ffcc00, #ff9900); color: #1a1a1a; }
+    .role-coleader { background: linear-gradient(90deg, #6b46c1, #8f63ff); color: #fff; }
+    .role-elder { background: linear-gradient(90deg, #2e86ab, #45aaf2); color: #fff; }
+    .role-member { background: rgba(255, 255, 255, 0.1); color: #ddd; }
+
+    /* Add spacing */
+    .row.g-4 {
+        justify-content: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>🏆 Our Clan Members</h1>
+    <p>Legends, fighters, and farmers — united under one banner.</p>
+</div>
+
+{% if members %}
+    <div class="row g-4">
+        {% for member in members %}
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="member-card">
+                <h3 class="member-name">{{ member.name }}</h3>
+                <div class="role-badge 
+                    {% if member.is_leader %}role-leader
+                    {% elif member.is_coleader %}role-coleader
+                    {% elif member.is_elder %}role-elder
+                    {% else %}role-member
+                    {% endif %}
+                ">
+                    {{ member.role | capitalize }}
+                </div>
+                <p class="member-level mt-2">🏰 Town Hall {{ member.townhall_level }}</p>
+                <div class="member-stats">
+                    <p><i class="bi bi-trophy-fill trophy-icon"></i> {{ member.trophies }} Trophies</p>
+                    <p>💝 Donations: {{ member.donations }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="text-center">
+        <p class="text-muted">No warriors have joined the battlefield yet 😔</p>
+    </div>
+{% endif %}
+{% endblock %}
