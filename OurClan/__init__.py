@@ -10,5 +10,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 from OurClan.routes.general import general_bp
+from OurClan.routes.api_routes import api_bp
 
 app.register_blueprint(general_bp)
+app.register_blueprint(api_bp)
