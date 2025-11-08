@@ -1,12 +1,12 @@
 from flask import request, jsonify
 from OurClan import db
 from OurClan.models import Member
-from OurClan.routes.api_routes import api_bp
+from OurClan.routes.general import general_bp
 import os
 
 password = "I LOVE CHEESEBALLS" # Test password
 
-@api_bp.route("/add_member", methods=["POST", "GET"])
+@general_bp.route("/add_member", methods=["POST", "GET"])
 def add_member():
     auth_header = request.headers.get("Authorization")
     if not auth_header or auth_header != f"Bearer {password}":
