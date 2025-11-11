@@ -17,12 +17,24 @@ def add_member():
     if not all(field in data for field in required_fields):
         return jsonify({"error": "Missing fields"}), 400
 
+    role = data["role"]
+
+    if role not in ["Member", "Elder", "Leader", "Co Leader"]:
+        return jsonify({"error": "Incorrect input"}), 400
+
+    is_leader = role == "Leader"
+    is_coleader = role == "Co Leader"
+    is_elder = role == "Elder"
+
     new_member = Member(
         name=data["name"],
-        role=data["role"],
+        role=role,
         townhall_level=data["townhall_level"],
         trophies=data["trophies"],
         donations=data["donations"],
+        is_leader = is_leader,
+        is_coleader = is_coleader,
+        is_elder = is_elder,
     )
 
     db.session.add(new_member)
